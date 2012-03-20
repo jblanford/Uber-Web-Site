@@ -1,0 +1,5 @@
+name = "Vivaldi Orders"
+description = "Process pre-orders for the Vivaldi tablet"
+package = "Vault"
+core = "6.x"
+version = "6.x-0.1"

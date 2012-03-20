@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * Implementation of hook_schema().
+ */
+
+function vivaldi_orders_schema() {
+  
+  $schema['vivaldi_orders'] = array(
+    'description' => t('Vivaldi pre-orders'),
+    'fields' => array(
+      'ID' => array(
+        'description' => t('Order ID. Primary key.'),
+        'type' => 'serial',
+        'not null' => TRUE,
+        ),
+      'Name' => array(
+        'description' => t('Name of customer'),
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        ),
+      'Email' => array(
+        'description' => t('Customer email address'),
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        ),
+      'Country' => array(
+        'description' => t('Customer country'),
+        'type' => 'varchar',
+        'length' => '25',
+        'not null' => TRUE,
+        ),
+      'Reg_code' => array(
+        'description' => t('Registration code for this order'),
+        'type' => 'varchar',
+        'length' => '25',
+        'not null' => TRUE,
+        ),
+      'Quantity' => array(
+        'description' => t('Number of tablets ordered'),
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => FALSE,
+        ),
+      'Active' => array(
+        'description' => t('Is this order still active (has not been used)'),
+        'type' => 'varchar',
+        'length' => '25',
+        'not null' => FALSE,
+        ),
+      'Used' => array(
+        'description' => t('When was this order used'),
+        'type' => 'datetime',
+        'not null' => FALSE,
+        ),
+      ),
+    'primary key' => array('ID'),
+    'unique keys' => array(
+      'Reg_code' => array('Reg_code')
+      ),
+    );
+  return $schema;
+}
+
+/**
+* Implementation of hook_install().
+*/
+
+function vivaldi_orders_install() {
+  drupal_install_schema('vivaldi_orders');
+}
+
+/**
+* Implementation of hook_uninstall().
+*/
+
+function vivaldi_orders_uninstall() {
+  drupal_uninstall_schema('vivaldi_orders');
+}
+
