@@ -57,7 +57,7 @@ function vivaldi_orders_fulfillment_form() {
         '#type'=>'textfield',
         '#required'=>true,
         '#default_value'=>' ',
-        '#title'=>t('Enter Full Name'),
+        '#title'=>t('Full Name'),
         '#size'=>50,
         '#maxlength'=>128,
         '#weight'=>1);
@@ -66,7 +66,7 @@ function vivaldi_orders_fulfillment_form() {
         '#type'=>'textfield',
         '#required'=>true,
         '#default_value'=>' ',
-        '#title'=>t('Enter Email Address'),
+        '#title'=>t('Email Address'),
         '#size'=>50,
         '#maxlength'=>128,
         '#weight'=>1);
@@ -75,7 +75,7 @@ function vivaldi_orders_fulfillment_form() {
         '#type'=>'textfield',
         '#required'=>true,
         '#default_value'=>' ',
-        '#title'=>t('Enter Registration Code'),
+        '#title'=>t('Registration Code'),
         '#size'=>50,
         '#maxlength'=>128,
         '#weight'=>1);
