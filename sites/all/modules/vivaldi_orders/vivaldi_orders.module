@@ -25,6 +25,55 @@ function vivaldi_orders_menu() {
   return $items;
 }
 
+/**
+* Implementation of hook_add_to_cart_data
+*
+* Called when items are added to cart to allow modules
+* to add info to the product data array.  Used here to
+* add the reg_code.
+*/
+function vivaldi_orders_add_to_cart_data($form_values) {
+  if (isset($form_values['reg_code'])) {
+    return array('reg_code' => $form_values['reg_code']);
+  }
+}
+
+
+/**
+* Implementation of hook_ca_action
+* 
+* Ubercart conditional action info
+*
+*/
+function vivaldi_orders_ca_action() {
+  
+  $order_arg = array(
+    '#entity' => 'uc_order',
+    '#title' => t('Order'),
+    );
+  
+  $actions['vivaldi_orders_send_test_message'] = array(
+    '#title' => t('Development debug message - Not for Production'),
+    '#category' => t('Order'),
+    '#callback' => 'vivaldi_orders_action_test_message',
+    '#arguments' => array(
+      'order' => $order_arg,
+      ),
+    );
+  
+  $actions['vivaldi_orders_make_inactive'] = array(
+    '#title' => t('Mark pre-order as used and no longer active.'),
+    '#category' => t('Order'),
+    '#callback' => 'vivaldi_orders_action_make_inactive',
+    '#arguments' => array(
+      'order' => $order_arg,
+      ),
+    );
+  
+  return $actions;
+}
+
+
 //
 // Page handlers
 //
@@ -116,11 +165,46 @@ function vivaldi_orders_fulfillment_form_submit($form, &$form_state) {
   //Get the quantity for the pre-order
   $qty = empty($form_state['vivaldi_orders']['order']['Quantity']) ? 1 : $form_state['vivaldi_orders']['order']['Quantity'];
   
-  // Validation OK, add the item
-  uc_cart_add_item(3, $qty);
+  // product data array
+  $data = array('nid' => 3, 'qty' => $qty, 'reg_code' => $form_state['values']['Reg_code']);
+  
+  /*  Must invoke hook_add_to_cart_data to build data array.  If this is not done, the product is
+   *  not marked as shippable and checkout page has no shipping.  We must also implement 
+   *  hook_add_to_cart_data to add the reg_code.
+   */
+  uc_cart_add_item(3, $qty, module_invoke_all('add_to_cart_data', $data));
   
   $form_state['redirect'] = 'cart';
 }
 
 
-  
+//
+// Ubercart actions
+//
+
+/*
+ * Development debug aid - can be removed when no longer needed
+*/
+function vivaldi_orders_action_test_message(&$order, $settings) {
+  dd("In vivaldi_orders_action_test_message");
+  dd($order);
+  dd($settings);
+}
+
+/*
+ * Mark pre-order as used and no longer active
+*/
+function vivaldi_orders_action_make_inactive(&$order, $settings) {
+  // loop through products - look for reg code in data - if found update
+  foreach ($order->products as $pnumber => $product) {
+    if (!empty($product->data['reg_code'])) {
+      $preorder           = new stdClass();
+      $preorder->Reg_code = $product->data['reg_code'];
+      $preorder->Active   = '0';
+      $preorder->Used     = date("Y-m-d H:i:s");
+      
+      drupal_write_record('vivaldi_orders', $preorder, 'Reg_code');
+    }
+  }
+}
+
