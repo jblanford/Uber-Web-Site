@@ -1,0 +1,6 @@
+This release includes fixes for the following issues.
+
+- Top of h1.title gets cut off on every page
+- Problem with Technoli in High Screen Resolutions
+- Disabling the primary menu dropdown doesn't work
+

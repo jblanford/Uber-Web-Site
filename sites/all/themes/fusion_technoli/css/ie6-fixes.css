@@ -1,0 +1,89 @@
+/* $Id: ie6-fixes.css 6572 2010-02-25 01:24:59Z chris $ */
+
+/* IE6 */
+
+/* Header */
+#header-group-inner {
+  padding: 15px 15px 0 15px;
+}
+
+.grid-type-960 #header-group-inner {
+  width: 990px;
+}
+
+.grid-type-fluid #header-group-inner {
+  margin: 0;
+  padding: 15px 0 0 0;
+}
+
+/* Slogan */
+#slogan {
+  line-height: 150%;
+  margin: 8px 20px 0 0;
+}
+
+/* Site name */
+#site-name {
+  display: block;
+  float: none;
+  margin-top: -10px;
+}
+
+#header-site-info.block {
+  margin-bottom: 0;
+}
+
+/* Forms */
+.form-submit {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Lists */
+.node .content ul li {
+  list-style-image: url(../images/list-style-arrow-ie.png);
+}
+
+/* Primary menu */
+#primary-menu ul.menu {
+  margin-left: 0;
+  position: relative;
+}
+
+#primary-menu ul.menu li ul.menu {
+  margin-left: auto;
+  position: absolute;
+}
+
+#primary-menu ul.menu li a:hover,
+#primary-menu ul.menu li a:focus,
+#primary-menu ul.menu li a.active {
+  text-decoration: none;
+}
+
+#primary-menu ul.menu li ul.menu {
+  margin-left: 10px;
+}
+
+/* Pager - current */
+.item-list ul.pager li.pager-current {
+  padding: 2px 2px 2px 5px;
+  margin-right: 4px;
+}
+
+/* Technoli photo */
+.technoli-photo .inner {
+  display: block;
+  height: 250px;
+}
+
+/* Technoli background overlay */
+.technoli-background-overlay .extra-bg-inner {
+  padding: 50px 20px 40px 20px;
+}
+
+/* List menu  arrows */
+.technoli-list-menu-arrows ul li a:link,
+.technoli-list-menu-arrows ul li a:visited {
+  position: relative;
+}

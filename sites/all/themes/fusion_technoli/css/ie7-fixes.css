@@ -1,0 +1,54 @@
+/* $Id: ie7-fixes.css 6572 2010-02-25 01:24:59Z chris $ */
+
+/* IE7 */
+
+/* Site name */
+#site-name {
+  display: block;
+  float: none;
+  margin-top: -10px;
+}
+
+#header-site-info.block {
+  margin-bottom: 0;
+}
+
+/* Forms */
+.form-submit {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Margins */
+.content-group-inner,
+.postscript-top-inner,
+.postscript-bottom-inner {
+  padding-bottom: 1.5em;
+}
+
+/* Lists */
+.node .content ul li {
+  list-style-image: url(../images/list-style-arrow-ie.png);
+}
+
+/* Header */
+.grid-type-960 #header-group-inner {
+  width: 990px;
+}
+
+.grid-type-fluid #header-group-inner {
+  margin: 0;
+  padding: 15px 0 0 0;
+}
+
+/* Slogan */
+#slogan {
+  line-height: 150%;
+  margin: 8px 20px 0 0;
+}
+
+/* Pager - current */
+.item-list ul.pager li.pager-current {
+  padding: 2px 2px 2px 5px;
+  margin-right: 4px;
+}

@@ -1,0 +1,1626 @@
+/* $Id: fusion-technoli-style.css 7388 2010-05-26 15:48:23Z jeremy $ */
+
+/* Basic Typography & Colors
+-------------------------------------------------------------- */
+/* Add general site styling here for typography and background */
+body {
+  font-family: "Myriad Pro", Myriad, "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 75%;   /* also set in fusion_starter.info: settings[base-font-size] = font-size-12 */
+}
+
+/* Default link styles - separate a:visited for a different visited link style */
+a:link,
+a:visited {
+  color: #739ac4;
+}
+
+/* Hover/active link styles. Don't forget :focus for accessibility */
+a:hover,
+a:focus,
+a:active {
+  color: #517ba7;
+}
+
+
+/* HTML Elements
+-------------------------------------------------------------- */
+/* Add padding here if desired so edges of theme aren't flush with browser window */
+html {
+  background: url(../images/html-bg.png) repeat-x top left;
+}
+
+/* Add general site styling here for typography and background */
+body {
+  background: url(../images/body-bg.png) no-repeat top center;
+  color: #606060;
+}
+
+
+/* Site Info
+-------------------------------------------------------------- */
+/* Add float here to put logo and site name side by side, also add margins as needed */
+#logo {
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+/* Size and typography for site name */
+#site-name {
+  float: left;
+  font-size: 116.7%; /* 14px/12px */
+  letter-spacing: 5px;
+  line-height: 100%;
+  text-transform: uppercase;
+}
+
+#site-name .first-word {
+  font-size: 400%; /* 48px/12px */
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Link and hover styles for site name */
+#site-name a:link .first-word,
+#site-name a:visited .first-word,
+#site-name a:hover .first-word,
+#site-name a:active .first-word {
+  color: #688294;
+}
+
+#site-name a:link,
+#site-name a:visited,
+#site-name a:hover,
+#site-name a:active {
+  color: #7aa3bf;
+}
+
+/* Typography for site slogan */
+#slogan {
+  color: #727272;
+  float: right;
+  font-size: 150%; /* 18px/12px */
+  margin: 13px 20px 0 0;
+  text-align: right;
+}
+
+.slogan-withsearch #slogan {
+  width: 285px;
+}
+
+#slogan strong {
+  color: #3590ce;
+  font-weight: normal;
+}
+
+
+/* Regions
+-------------------------------------------------------------- */
+
+/* All Regions
+-------------------------------------------------------------- */
+.page-inner {
+  border: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+
+/* Header Regions
+-------------------------------------------------------------- */
+#header-group-inner {
+  background: #fff url(../images/header-bg.png) repeat-x bottom center;
+  margin: 0 -15px 0 -15px;
+  padding: 20px 0 0 0;
+}
+
+.grid-type-fluid #header-group-inner {
+  margin: 0;
+}
+
+#header-group-bottom {
+  clear: both;
+}
+
+#header-group-left {
+  background: url(../images/header-bg-left.png) no-repeat bottom left;
+  display: block;
+  float: left;
+  height: 20px;
+  width: 20px;
+}
+
+#header-group-bottom {
+  background: url(../images/header-bg-middle.png) repeat-x bottom left;
+  display: block;
+}
+
+#header-group-right {
+  background: url(../images/header-bg-right.png) no-repeat bottom right;
+  display: block;
+  float: right;
+  height: 20px;
+  width: 20px;
+}
+
+#header-site-info.block {
+  margin-left: 10px;
+  width: 450px;
+}
+
+/* compensate for -15px margin on header-group-inner */
+.header-top-inner {
+  padding: 0 15px;
+}
+
+/* This is the Header region in which you can place (small) blocks */
+.header-primary {
+  color: #fff;
+}
+
+.header-primary a:link,
+.header-primary a:visited {
+  color: #8FD2FF;
+}
+
+.header-primary h2.block-title {
+  color: #fff;
+}
+
+
+/* Secondary menu
+-------------------------------------------------------------- */
+#secondary-menu  {
+}
+
+#secondary-menu #secondary-menu-inner ul.links {
+  text-align: right;
+}
+
+#secondary-menu #secondary-menu-inner ul.links li {
+  margin: 0;
+  padding: 0;
+}
+
+#secondary-menu #secondary-menu-inner ul.links li a:link,
+#secondary-menu #secondary-menu-inner ul.links li a:visited {
+  border-left: 1px solid #ededed;
+  margin: 0;
+  padding: 0 10px 0 12px;
+}
+
+#secondary-menu #secondary-menu-inner ul.links li.first a {
+  border-left: 0;
+  padding-left: 0;
+}
+
+#secondary-menu #secondary-menu-inner ul.links li a:hover,
+#secondary-menu #secondary-menu-inner ul.links li a:focus,
+#secondary-menu #secondary-menu-inner ul.links li a.active {
+}
+
+
+/* Header - Search
+-------------------------------------------------------------- */
+#search-box {
+  margin: 10px 10px 0 0;
+}
+
+#search-box.block {
+  float: right;
+  width: 180px;
+}
+
+#search-box #search  {
+  float: right;
+}
+
+#search-box #search input.search-input {
+  border: 1px solid #c6d3df;
+  color: #aeaeae;
+  font-size: 100%; /* 12px/12px */
+  padding: 3px 4px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+#search-box input.search-input.form-text {
+  padding: 6px 2px 4px;
+  width: 120px;
+}
+
+input.search_submit {
+  background-color: #737373;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  padding: 0 2px 3px 2px;
+}
+
+/* Search block */
+form#search-block-form input.form-text {
+  max-width: 55%;
+}
+
+
+/*  Preface Regions
+-------------------------------------------------------------- */
+/* The Preface Top and Preface Bottom regions sit between the header and all
+  columns, above the sidebars and main content area */
+.preface-top {
+  background: #fff url(../images/preface-shadow.png) no-repeat bottom center;
+  padding: 10px 0;
+}
+
+/* Snug up margin between blocks in preface top */
+.preface-top .block .inner {
+  margin-right: 0;
+}
+
+.preface-top .preface-top-inner .last .inner {
+  margin-right: 10px;
+}
+
+.preface-top .block {
+  margin-bottom: 8px;
+}
+
+
+/*  Main Area (content + sidebars + preface bottom + postscript top)
+-------------------------------------------------------------- */
+#main-wrapper {
+}
+
+.main {
+  background-color: #fff;
+  padding: 20px 0;
+}
+
+/* Content Regions
+-------------------------------------------------------------- */
+#content-group {
+  border-left: 1px solid #f1f1f1;
+  border-right: 1px solid #f1f1f1;
+  margin-left: 0;
+  margin-right: -2px;
+}
+
+#content-content .inner {
+  margin: 0;
+}
+
+
+/*  Postscript & Footer Regions
+-------------------------------------------------------------- */
+.postscript-bottom-wrapper {
+  background: #fcfcfc url(../images/postscript-bg.png) repeat-x bottom left;
+  padding-top: 1.5em;
+}
+
+.postscript-bottom .block .inner {
+  border-right: 1px solid #e7e7e7;
+  padding-right: 1.5em;
+}
+
+.postscript-bottom .last .inner {
+  border: none;
+}
+
+#footer-wrapper {
+  background-color: #e3e3e3;
+  border-top: 1px solid #fff;
+  font-family: Tahoma, Verdana, Helvetica, Arial, sans-serif;
+}
+
+.footer-wrapper .block .inner {
+  border-right: 1px solid #d2d2d2;
+  padding-right: 1.5em;
+}
+
+.footer-wrapper .last .inner {
+  border: none;
+}
+
+#footer-message-wrapper {
+  background-color: #e3e3e3;
+  padding: 15px 0 0 0;
+}
+
+.footer-wrapper h2.block-title {
+  color: #463e39;
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.footer-wrapper a:link,
+.footer-wrapper a:visited {
+  color: #463e39;
+}
+
+.footer {
+  padding: 30px 0;
+}
+
+.footer-message {
+  font-size: 90%;
+}
+
+.footer-message-text {
+}
+
+
+/* Primary Menu
+/-------------------------------------------------------------- */
+/* Add general styles for primary menu here, such as typography, borders, floats,
+  or spacing above/below */
+#primary-menu {
+  margin: 0;
+  padding: 8px 0 25px;
+}
+
+#primary-menu.block {
+  overflow: visible;
+}
+
+#primary-menu ul.menu {
+  font-family: "Arial Narrow", Helvetica, Arial, sans-serif;
+  font-size: 120%;
+  font-weight: bold;
+  margin: 0 0 0 -10px;
+  padding: 0;
+}
+
+/* Link style for top level menu items, add padding here */
+#primary-menu ul.menu li a:link,
+#primary-menu ul.menu li a:visited  {
+  color: #fff;
+  border-right: 1px solid #4690c4;
+  display: block;
+  float: left;
+  padding: 2px 10px;
+}
+
+#primary-menu ul.menu li.first a:link,
+#primary-menu ul.menu li.first a:visited {
+  padding-left: 0;
+}
+
+#primary-menu ul.menu li.last a:link,
+#primary-menu ul.menu li.last a:visited {
+  border-right: none;
+  padding-right: 0;
+}
+
+#primary-menu ul.menu li a:hover,
+#primary-menu ul.menu li a:focus,
+#primary-menu ul.menu li a.active {
+  color: #c5e8ff;
+}
+
+/* Drop down showing second level and highlighting top level */
+#primary-menu ul.menu li:hover a:link,
+#primary-menu ul.menu li:hover a:visited,
+#primary-menu ul.menu li.hover a:link,
+#primary-menu ul.menu li.hover a:visited,
+#primary-menu ul.menu li:hover ul.menu li a:link,
+#primary-menu ul.menu li:hover ul.menu li a:visited,
+#primary-menu ul.menu li.hover ul.menu li a:link,
+#primary-menu ul.menu li.hover ul.menu li a:visited,
+#primary-menu ul.menu li.sfHover a:link,
+#primary-menu ul.menu li.sfHover a:visited,
+#primary-menu ul.menu li.sfHover a:link,
+#primary-menu ul.menu li.sfHover a:visited,
+#primary-menu ul.menu li.active-trail a:link,
+#primary-menu ul.menu li.active-trail a:visited {
+  color: #c5e8ff;
+}
+
+#primary-menu ul.menu li:hover ul.menu li a:hover,
+#primary-menu ul.menu li.hover ul.menu li a:hover {
+  color: #fff;
+}
+
+/* Horizontal nav bar override */
+#primary-menu ul.sf-navbar,
+#primary-menu ul.sf-navbar li,
+#primary-menu ul.sf-navbar a:link,
+#primary-menu ul.sf-navbar a:visited {
+  background: transparent;
+}
+
+/* Second level menu */
+#primary-menu ul.menu li ul.menu {
+  font-size: 85%; /* 11px/13px */
+  margin-left: 10px;
+  margin-top: -5px;
+}
+
+#primary-menu ul.menu li.first ul.menu {
+  margin-left: 0;
+}
+
+#primary-menu ul.menu li ul.menu li a:link,
+#primary-menu ul.menu li ul.menu li a:visited {
+  border: none;
+  color: #b7e1ff;
+  padding: 2px 20px 2px 0;
+}
+
+#primary-menu ul.menu li ul.menu li a:hover,
+#primary-menu ul.menu li ul.menu li a:focus {
+  color: #fff;
+}
+
+/* Third level menu - not supported with this menu style, hidden here */
+#primary-menu ul.menu li ul.menu li ul.menu {
+  display: none !important;
+}
+
+/* Primary menu - Nolink */
+#primary-menu .primary-menu-inner ul.menu li span.nolink {
+  color: #fff;
+  cursor: pointer;
+  border-right: 1px solid #4690c4;
+  display: block;
+  float: left;
+  padding: 2px 10px;
+}
+
+#primary-menu .primary-menu-inner ul.menu li.first span.nolink {
+  padding-left: 0;
+}
+
+#primary-menu .primary-menu-inner ul.menu li.last span.nolink {
+  border-right: none;
+  padding-right: 0;
+}
+
+#primary-menu .primary-menu-inner ul.menu li span.nolink:hover {
+  color: #c5e8ff;
+}
+
+#primary-menu .primary-menu-inner ul.menu li.active-trail span.nolink {
+  color: #c5e8ff;
+}
+
+
+/* Breadcrumbs
+-------------------------------------------------------------- */
+#breadcrumbs a:link,
+#breadcrumbs a:visited {
+  color: #767676;
+}
+
+#breadcrumbs a:hover {
+  color: #000;
+}
+
+
+/* Tables
+-------------------------------------------------------------- */
+table {
+  border-bottom: none;
+}
+
+/* Body of tables */
+tbody {
+  border-bottom: none;
+}
+
+/* Header of tables */
+th,
+thead th {
+  border-bottom: none;
+  color: #1674b5;
+  font-size: 116.7%; /* 14px/12px */
+  font-weight: normal;
+  padding: 5px;
+}
+
+thead th {
+  font-weight: bold;
+}
+
+tbody {
+  border: none;
+}
+
+tbody th {
+  border-bottom: none;
+}
+
+/* Alternating row background styles */
+tr.even,
+tr.even td {
+  background-color: #fff;
+  border-bottom: none;
+}
+
+tr.odd,
+tr.odd td {
+  background-color: #f2f2f2;
+  border-bottom: none;
+}
+
+table td {
+  padding: 5px 10px;
+}
+
+td.active {
+}
+
+tr.drag td,
+tr.drag-previous td {
+  color: #000;
+}
+
+
+/* Pagers
+-------------------------------------------------------------- */
+ul.pager a:link,
+ul.pager a:visited,
+ul.pager li.pager-current {
+  background-color: #ededed;
+  border: 1px solid #ddd;
+  color: #4e4e4e;
+  text-decoration: none;
+}
+
+ul.pager li.pager-current {
+  background-color: #fff;
+  border: 1px solid #a3a3a3;
+  color: #a7a7a7;
+}
+
+ul.pager a:hover,
+ul.pager a:focus {
+  background: #e2e2e2 url(../images/pager-bg.png) repeat-x top left;
+  border: 1px solid #a3a3a3;
+  color: #000;
+}
+
+ul.pager li.pager-next a,
+ul.pager li.pager-last a,
+ul.pager li.pager-first a,
+ul.pager li.pager-previous a {
+  border: 0;
+  background: transparent none;
+  font-weight: bold;
+}
+
+/* Header pager */
+.header ul.pager a:link,
+.header ul.pager a:visited,
+.header ul.pager li.pager-current {
+  background-color: #ededed;
+  border: 1px solid #bebdbd;
+  color: #4e4e4e;
+  text-decoration: none;
+}
+
+.header ul.pager li.pager-current {
+  background-color: #fff;
+  color: #000;
+}
+
+.header ul.pager a:hover,
+.header ul.pager a:focus {
+  background: #e2e2e2 url(../images/pager-bg.png) repeat-x top left;
+  border: 1px solid #a3a3a3;
+  color: #000;
+}
+
+
+/* Forms
+/-------------------------------------------------------------- */
+/* Typography and backgrounds for all form buttons */
+form input.form-submit {
+  background: url(../images/submit-bg.png) repeat-x top center;
+  border: none;
+  color: #5c5c5c;
+  font-size: 116.7%; /* 14px/12px */
+  font-weight: normal;
+  padding: 4px 10px;
+  text-transform: lowercase;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+/* Hover style for form buttons */
+form input.form-submit:hover,
+form input.form-submit.hover,
+form input.form-submit:focus,
+form#search-form input#edit-submit:hover,
+form#search-form input#edit-submit.hover,
+form#search-form input#edit-submit:focus {
+  background-position: bottom center;
+  color: #000;
+}
+
+/* Typography, background, borders, padding for form fields */
+.form-item input,
+.form-item select,
+.form-item textarea {
+  background: #fff url(../images/textfield-shadow.png) repeat-x center top;
+  border: 1px solid #e3e3e3;
+  color: #666;
+  border-radius: 4px;
+  padding: 5px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+/* Remove backgrounds and border on radios and checkboxes */
+.form-item .form-radio,
+.form-item .form-checkbox {
+  background: none;
+  border: none !important;
+}
+
+/* Fieldset wrapper around groups of form elements -- add border here */
+fieldset {
+  border: 1px solid #ededed;
+}
+
+/* Link style for legend of fieldsets */
+fieldset legend,
+legend.collapse-processed,
+legend.collapse-processed a:link,
+legend.collapse-processed a:visited {
+  color: #1674b5;
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+/* Autocomplete */
+html.js input.form-autocomplete {
+  background-position: 100% 6px;
+  max-width: 96%;
+}
+
+html.js input.form-autocomplete.throbbing {
+  background-position: 100% -14px;
+}
+
+
+/* Drupal messages
+/-------------------------------------------------------------- */
+/* Error that appears when a required form field is not filled out */
+.form-item input.error,
+.form-item textarea.error,
+.form-item select.error {
+  border: 1px solid #AA1144;
+}
+
+/* Required field */
+.marker,
+.form-required {
+  color: #AA1144;
+}
+
+div.content-messages-inner div.status,
+div.content-messages-inner div.error, 
+div.content-help-inner div.help,
+div.content-messages-inner div.warning {
+  border-width: 2px;
+}
+
+
+/* Comments
+/-------------------------------------------------------------- */
+/* Style for each individual comment */
+div.comment {
+  padding: 15px;
+}
+
+#comments h2.comments-header {
+  text-transform: uppercase;
+}
+
+/* Subject (title) of each comment */
+div.comment h3.title {
+  margin: 0;
+}
+
+/* Links (edit, reply, delete) for each comment */
+div.comment div.links a,
+div.comment ul.links a {
+}
+
+/* Alternating styles for even/odd comments */
+.comments div.odd {
+  background-color: #f6fafd;
+}
+
+.comments div.even {
+  background-color: #fff;
+}
+
+/* A special highlight style for a comment by the author of the node */
+.comments div.comment-by-author {
+  background-color: #f6fafd;
+  border: 2px solid #D1E3EF;
+}
+
+/* Comment signatures */
+.signature {
+  border-top: 1px solid #D1E3EF;
+}
+
+/* User avatars in comments */
+.comment-wrapper .picture img {
+}
+
+.comments .submitted {
+  color: #739ac4;
+  margin: 0 0 5px 0;
+}
+
+#comments .box {
+  background: url(../images/comment-divider.png) repeat-x top left;
+  padding: 30px 0 0 0;
+}
+
+#comments .box h2.title {
+  background: url(../images/icon-commentbubble.png) no-repeat top left;
+  font-weight: normal;
+  padding: 0 0 0 22px;
+  text-transform: uppercase;
+}
+
+#comments .box h2.title .first-word {
+  font-weight: bold;
+}
+
+
+/* Profiles
+/-------------------------------------------------------------- */
+/* Styles for sub-headings on user profiles */
+.profile dt {
+}
+
+
+/* Forum
+/-------------------------------------------------------------- */
+.forum-topic-navigation {
+  border-top: 1px solid #888;
+  border-bottom: 1px solid #888;
+}
+
+
+/* Book
+/-------------------------------------------------------------- */
+.book-navigation .menu {
+  border-top: 1px solid #CCC;
+}
+
+.book-navigation .page-links {
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+}
+
+
+/* Poll
+/-------------------------------------------------------------- */
+div.poll div.bar {
+}
+
+div.poll div.bar {
+  background-color: #DDD;
+}
+
+div.poll div.bar div.foreground {
+  background-color: #999;
+}
+
+
+/* Page titles
+/-------------------------------------------------------------- */
+/* Page and full node titles */
+h1.title {
+  color: #5c98ca;
+  font-size: 183.3%; /* 22px/12px */
+  font-weight: normal;
+  line-height: 120%;
+}
+
+
+/* Default node styles
+/-------------------------------------------------------------- */
+/* Change unpublished and preview colors for dark bg themes */
+.node-unpublished {
+  background-color: #FFF4F4;
+}
+.preview .node {
+  background-color: #FFFFEA;
+}
+
+/* Typography for node titles */
+h2.title {
+}
+
+/* Colors for linked node titles */
+h2.title a:link,
+h2.title a:visited {
+}
+
+h2.title a:hover,
+h2.title a:focus,
+h2.title a:active {
+}
+
+/* Separators and padding for node teasers */
+.teaser {
+  border-bottom: 1px solid #ededed;
+  padding: 0 0 10px 0;
+}
+
+/* Author/date info */
+.submitted {
+}
+
+/* Links for nodes (taxonomy, commenting, read more, etc) */
+div.links {
+  text-align: right;
+}
+
+.links ul.links li a:link,
+.links ul.links li a:visited {
+  border-left: 1px solid #ccc;
+  padding: 0 5px;
+}
+
+.links ul.links li.first a:link,
+.links ul.links li.first a:visited {
+  border-left: none;
+  padding: 0 5px 0 0;
+}
+
+.links ul.links li.last a:link,
+.links ul.links li.last a:visited {
+  padding: 0 0 0 5px;
+}
+
+/* Just more/read more links */
+div.node .read-more a,
+div.node .more-link a {
+}
+
+/* Terms */
+#content-inner.block .terms ul {
+  margin: 0 10px;
+}
+
+.terms {
+  background-color: #a3a3a3;
+  color: #fff;
+  margin: 10px 0;
+  padding: 5px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+.terms ul li a:link,
+.terms ul li a:visited {
+  color: #fff;
+  padding: 0 5px;
+}
+
+.terms ul li.first a:link,
+.terms ul li.first a:visited {
+  padding-left: 0;
+}
+
+.node .content ul {
+  margin-bottom: 10px;
+}
+
+.node .content ul li {
+  list-style-image: url(../images/list-style-arrow.png);
+}
+
+.meta {
+  color: #515151;
+  font-size: 116.7%; /* 14px/12px */
+}
+
+body.full-node .meta {
+  margin: 0 0 30px 0;
+}
+
+blockquote {
+  background: #f6fafd url(../images/blockquote-bg.png) no-repeat 30px 15px;
+  color: #4f77a3;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 140%;
+  line-height: 140%;
+  margin: 0 20px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+blockquote p {
+  padding: 20px 50px;
+}
+
+.block .inner blockquote {
+  padding: 20px 50px;
+}
+
+.block blockquote p {
+  padding: 0;
+}
+
+.content-content .picture {
+  float: right;
+  margin: 0 0 15px 15px;
+}
+
+
+/* Default block styles
+/-------------------------------------------------------------- */
+
+h2.block-title {
+  color: #3d86b4;
+  font-size: 133.3%; /* 16px/12px */
+  font-weight: normal;
+}
+
+
+/* Maintenance Page
+/-------------------------------------------------------------- */
+.in-maintenance  {
+}
+
+
+/* Tab Menus
+/-------------------------------------------------------------- */
+#content-tabs {
+  background-color: transparent;
+  float: left;
+  margin: 20px 0;
+  padding: 0;
+}
+
+#content-tabs ul.primary,
+#content-tabs ul.secondary {
+  border-bottom: 1px solid #767676;
+  clear: both;
+  float: left;
+  margin: 0;
+  padding: 0 10px;
+}
+
+#content-tabs ul.secondary {
+  border-bottom: 1px solid #555;
+  margin-top: 10px;
+  text-transform: lowercase;
+}
+
+#content-tabs ul.primary li,
+#content-tabs ul.secondary li {
+  border-style: none;
+  display: inline;
+  float: left;
+  list-style: none;
+  margin: 0 10px;
+  padding: 0;
+}
+
+#content-tabs ul.primary li a:link,
+#content-tabs ul.primary li a:visited,
+#content-tabs ul.secondary li a:link,
+#content-tabs ul.secondary li a:visited {
+  background-color: transparent;
+  border: none;
+  color: #767676;
+  float: left;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 0 6px 0;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#content-tabs ul.secondary li a:link,
+#content-tabs ul.secondary li a:visited {
+  color: #555;
+}
+
+#content-tabs ul.primary li a.active:link,
+#content-tabs ul.primary li a.active:visited {
+  border-bottom: 4px solid #767676;
+  color: #555;
+  padding-bottom: 2px;
+}
+
+#content-tabs ul.secondary li a.active:link,
+#content-tabs ul.secondary li a.active:visited {
+  border-bottom: 4px solid #555;
+  color: #777;
+  padding-bottom: 2px;
+}
+
+#content-tabs ul.primary li a:hover,
+#content-tabs ul.primary li a:focus,
+#content-tabs ul.secondary li a:hover,
+#content-tabs ul.secondary li a:focus {
+  border-bottom: 4px solid #777;
+  color: #777;
+  padding-bottom: 2px;
+}
+
+
+/* Ubercart
+/-------------------------------------------------------------- */
+/* Store footer */
+#store-footer {
+  background-color: #e3e3e3;
+}
+
+/* Catalog page */
+.catalog-grid-title a,
+.category a {
+  font-size: 116.7%; /* 14px/12px */
+  font-weight: bold;
+}
+
+.category-grid-products .uc-price {
+  font-size: 116.7%; /* 14px/12px */
+  font-weight: bold;
+}
+
+/* Category list */
+ul.uc-categories {
+  display: block !important;
+  background: #efefef;
+  margin: 0;
+  padding: 3px 10px;
+}
+
+ul.uc-categories li {
+  font-weight: bold;
+  margin-left: 10px;
+  padding: 0;
+}
+
+ul.uc-categories li.first {
+  margin-left: 0;
+}
+
+/* Product page */
+.product-info .uc-price-display {
+  color: #5C98CA;
+  font-size: 233.3%; /* 28px/12px */
+  font-weight: normal;
+  width: auto;
+}
+
+/* Cart block buttons */
+.cart-block-summary-links ul.links li {
+  border-right: none;
+  padding: 0;
+}
+
+.cart-block-view-cart a {
+  background: none;
+  margin-right: 10px;
+}
+
+.cart-block-checkout a:link,
+.cart-block-checkout a:visited {
+  background: url(../images/cart-submit-bg.png) repeat-x bottom center;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  margin: 2px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+/* Hover style for form buttons */
+.cart-block-checkout a:hover,
+.cart-block-checkout a:focus {
+  background: url(../images/cart-submit-bg.png) repeat-x top center;
+  text-decoration: none;
+}
+
+/* Checkout buttons  */
+#checkout-form-bottom #edit-continue,
+#cart-form-buttons #edit-checkout,
+tr.review-button-row #edit-submit,
+.node-add-to-cart {
+  background: url(../images/cart-submit-bg.png) repeat-x bottom center;
+  color: #fff;
+  font-size: 100%; /* 12px/12px */
+}
+
+#checkout-form-bottom #edit-continue:hover,
+#checkout-form-bottom #edit-continue.hover,
+#checkout-form-bottom #edit-continue:focus,
+#cart-form-buttons #edit-checkout:hover,
+#cart-form-buttons #edit-checkout.hover,
+#cart-form-buttons #edit-checkout:focus,
+tr.review-button-row #edit-submit:hover,
+tr.review-button-row #edit-submit.hover,
+tr.review-button-row #edit-submit:focus,
+.node-add-to-cart:hover,
+.node-add-to-cart.hover,
+.node-add-to-cart:focus  {
+  background-position: top center;
+  color: #fff;
+}
+
+/* Update / Cancel / Back buttons */
+input#edit-update,
+input#edit-cancel,
+input#edit-back {
+  background: none;
+  color: #739AC4;
+  font-family: Arial, Helvetica, Verdana, "Bitstream Vera Sans", sans-serif;
+  font-size: 100%; /* 12px/12px */
+  font-weight: normal;
+  padding: 3px 0;
+  text-transform: none;
+}
+
+input#edit-update:hover,
+input#edit-cancel:hover,
+input#edit-back:hover {
+  background: transparent url(../images/link-underline.png) repeat-x center bottom;
+  color: #000;
+}
+
+/* Table styles */
+.solid-border {
+  border: 1px solid #ededed;
+}
+
+#uc-cart-checkout-form table {
+  border: none;
+}
+
+/* Order review */
+table.order-review-table,
+table.order-review-table table {
+  border: none;
+  width: 100%;
+}
+
+table.order-review-table table {
+  margin: 0 0 10px 0;
+}
+
+.order-review-table .pane-title-row {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #ededed;
+  color: #5C98CA;
+  font-weight: normal;
+  padding: 10px 20px;
+  text-align: left;
+}
+
+.order-review-table .pane-title-row td {
+  font-size: 166.7%; /* 20px/12px */
+}
+
+.order-review-table .row-border-top {
+  border-top: 3px solid #ededed;
+}
+
+.order-review-table td {
+  font-size: 100%; /* 12px/12px */
+}
+
+.order-review-table .title-col {
+  font-weight: bold;
+  padding: 15px 10px;
+  text-align: left;
+}
+
+.order-review-table .data-col {
+  padding: 15px 10px;
+}
+
+.order-review-table td {
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+
+.order-review-table .review-button-row {
+  background: url(../images/node-teaser-divider.png) repeat-x top left;
+  border: none;
+  text-align:right;
+}
+
+.order-review-table .review-button-row td {
+  padding: 10px 0 0 10px;
+}
+
+
+/* Skinr styles
+/-------------------------------------------------------------- */
+/* Technoli - Blue background */
+.technoli-blue-background .inner {
+  background-color: #f6fafd;
+  color: #767676;
+  padding: 15px;
+}
+
+/* Technoli - Gray background */
+.technoli-gray-background .inner {
+  background-color: #f9f9f9;
+  color: #767676;
+  padding: 15px;
+}
+
+.technoli-gray-background h2.block-title {
+  color: #767676;
+}
+
+/* Technoli - List menu */
+.technoli-list-menu .inner ul {
+  margin: 0;
+  padding: 0;
+}
+
+.technoli-list-menu .inner ul li {
+  border-bottom: 1px solid #eee;
+  display: block;
+  font-size: 116.7%; /* 14px/12px */
+  list-style: none;
+  list-style-image: none;
+  margin: 0;
+  padding: 5px 0 5px 10px;
+}
+
+.technoli-list-menu .inner ul li.expanded {
+  background-color: #fbfbfb;
+}
+
+.technoli-list-menu .inner ul li a:link,
+.technoli-list-menu .inner ul li a:visited {
+  color: #959595;
+}
+
+.technoli-list-menu .inner ul li a:hover,
+.technoli-list-menu .inner ul li a.active {
+  color: #739ac4;
+  text-decoration: none;
+}
+
+.technoli-list-menu .inner ul li a.active {
+  font-weight: bold;
+}
+
+.technoli-list-menu .inner ul li ul {
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+.technoli-list-menu .inner ul li.expanded ul li {
+  background: url(../images/menu-list-arrow.png) no-repeat 0 10px;
+  border-bottom: none;
+  font-size: 83.3%; /* 10px/12px */
+  margin: 0;
+  padding: 4px 5px 4px 10px;
+}
+
+.technoli-list-menu .inner h2.block-title {
+  color: #6ebef6;
+}
+
+.technoli-list-menu .inner ul li ul li ul {
+  margin: 0 0 0 10px;
+}
+
+.technoli-list-menu .inner ul li.expanded ul li ul li {
+  font-size: 100%; /* 10px */
+}
+
+/* Technoli - List menu with arrows */
+.technoli-list-menu-arrows .inner h2.block-title {
+  color: #6ebef6;
+}
+
+.technoli-list-menu-arrows .inner ul {
+  margin: 0;
+  padding: 0;
+}
+
+.technoli-list-menu-arrows .inner ul li {
+  border-bottom: 1px solid #eee;
+  display: block;
+  font-size: 116.7%; /* 14px/12px */
+  list-style: none;
+  list-style-image: none;
+  margin: 0;
+  padding: 8px 0 8px 10px;
+}
+
+.technoli-list-menu-arrows .inner ul li.expanded {
+  background-color: #fbfbfb;
+}
+
+.technoli-list-menu-arrows .inner ul li a:link,
+.technoli-list-menu-arrows .inner ul li a:visited {
+  background: url(../images/list-menu-arrow-gray.png) no-repeat center right;
+  color: #959595;
+  display: block;
+  padding-right: 15px;
+}
+
+.technoli-list-menu-arrows .inner ul li a:hover,
+.technoli-list-menu-arrows .inner ul li a:focus,
+.technoli-list-menu-arrows .inner ul li a.active {
+  background: url(../images/list-menu-arrow-blue.png) no-repeat center right;
+  color: #739ac4;
+  text-decoration: none;
+}
+
+.technoli-list-menu-arrows .inner ul li.expanded a:link,
+.technoli-list-menu-arrows .inner ul li.expanded a:visited,
+.technoli-list-menu-arrows .inner ul li.expanded a:hover,
+.technoli-list-menu-arrows .inner ul li.expanded a:focus,
+.technoli-list-menu-arrows .inner ul li.expanded a.active {
+  background: url(../images/list-menu-arrow-blue-expanded.png) no-repeat center right;
+}
+
+.technoli-list-menu-arrows .inner ul li ul {
+  font-size: 85.7%; /* 12px/14px */
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+.technoli-list-menu-arrows .inner ul li.expanded ul li {
+  border-bottom: none;
+  font-size: 100%; /* 12px/12px */
+  margin: 5px 0;
+  padding: 0;
+}
+
+.technoli-list-menu-arrows .inner ul li.expanded ul li a:link,
+.technoli-list-menu-arrows .inner ul li.expanded ul li a:visited {
+  background: none;
+}
+
+.technoli-list-menu-arrows .inner ul li ul li ul {
+  margin: 0 0 0 10px;
+}
+
+/* Technoli - Photo backgrounds */
+.technoli-photo .inner {
+  display: block;
+  height: 250px;
+}
+
+.technoli-business-background .inner {
+  background: url(../images/photo_teamwork.jpg) no-repeat 10% 15%;
+}
+
+.technoli-businesssupport-background .inner {
+  background: url(../images/photo_businesssupport.jpg) no-repeat 10% 15%;
+}
+
+.technoli-city-background .inner {
+  background: url(../images/photo_city.jpg) no-repeat 10% 15%;
+}
+
+.technoli-sold-background .inner {
+  background: url(../images/photo_sold.jpg) no-repeat 10% 60%;
+}
+
+.technoli-train-background .inner {
+  background: url(../images/photo_train.jpg) no-repeat 10% 50%;
+}
+
+.technoli-walking-background .inner {
+  background: url(../images/photo_walking.jpg) no-repeat 10% 45%;
+}
+
+/* Technoli - Text overlay bottom */
+.technoli-text-overlay-bottom .extra-bg {
+  background: url(../images/black-transparent.png) repeat;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.technoli-text-overlay-bottom h2.block-title {
+  color: #fff;
+  float: left;
+  font-family: "Franklin Gothic Medium", "Century Gothic", "Apple Gothic", "URW Gothic L", Helvetica, Arial, sans-serif;
+  font-size: 300%; /* 36px/12px */
+  font-weight: normal;
+  letter-spacing: 1px;
+  line-height: 100%;
+  margin-bottom: 0;
+  padding: 10px 10px 10px 13px;
+}
+
+.technoli-text-overlay-bottom h2.block-title + .content {
+  border-left: 1px solid #fff;
+}
+
+.technoli-text-overlay-bottom .content {
+  color: #fff;
+  float: left;
+  margin-top: 15px;
+  padding-left: 8px;
+}
+
+.technoli-text-overlay-bottom .content p {
+  margin: 0.5em 0;
+}
+
+.technoli-text-overlay-bottom a:link,
+.technoli-text-overlay-bottom a:visited {
+  color: #fff9d4;
+  font-weight: bold;
+}
+
+/* Technoli - Background overlay */
+.technoli-background-overlay .extra-bg {
+  background: url(../images/black-transparent.png) repeat;
+  color: #fff;
+  height: 100%;
+}
+
+.technoli-background-overlay .extra-bg-inner {
+  padding: 50px 20px;
+}
+
+.technoli-photo.technoli-background-overlay .inner {
+  background-position: 100% 15%;
+}
+
+.technoli-background-overlay h2.block-title {
+  color: #fff;
+  font-weight: bold;
+}
+
+.technoli-background-overlay a:link,
+.technoli-background-overlay a:visited {
+  color: #fff9d4;
+  font-weight: bold;
+}
+
+/* Technoli - Quote */
+.technoli-quote .inner .content {
+  background: url(../images/blockquote-bg.png) no-repeat 0px 5px;
+  color: #4f77a3;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.technoli-quote p {
+  padding: 5px 20px;
+}
+
+/* Fusion - Multi column list menu */
+.fusion-multicol-menu {
+}
+
+.fusion-multicol-menu ul {
+  margin: 0;
+  text-align: left;
+}
+
+.fusion-multicol-menu ul li {
+  border-left: 1px solid #d2d2d2;
+  display: block;
+  float: left;
+  font-weight: bold;
+  padding-left: 15px;
+}
+
+.fusion-multicol-menu ul li.first {
+}
+
+.fusion-multicol-menu ul li.last a {
+  padding-right: 0;
+}
+
+.fusion-multicol-menu ul li a,
+.fusion-multicol-menu ul li .nolink {
+  color: #463e39;
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+.fusion-multicol-menu ul li a:hover,
+.fusion-multicol-menu ul li a.active {
+}
+
+.fusion-multicol-menu .inner ul li ul li a:link,
+.fusion-multicol-menu .inner ul li ul li a:visited {
+  font-weight: normal;
+}
+
+.fusion-multicol-menu ul li.expanded {
+}
+
+.fusion-multicol-menu ul li.expanded ul {
+  display: block;
+  margin-left: 0;
+}
+
+.fusion-multicol-menu ul li.expanded ul li {
+  border: none;
+  display: block;
+  padding-left: 0;
+  text-align: left;
+}
+
+.fusion-multicol-menu ul.menu li ul.menu li {
+  font-weight: normal;
+}
+
+.fusion-multicol-menu ul li.expanded ul li ul li {
+  padding-left: 5px;
+}
+
+
+/* Skinr previews
+/-------------------------------------------------------------- */
+#screenshot .technoli-quote-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-01.png) no-repeat;
+}
+
+#screenshot .technoli-list-menu-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-02.png) no-repeat;
+}
+
+#screenshot .technoli-list-menu-arrows-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-03.png) no-repeat;
+}
+
+#screenshot .technoli-blue-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-04.png) no-repeat;
+}
+
+#screenshot .technoli-gray-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-05.png) no-repeat;
+}
+
+#screenshot .technoli-business-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-06.png) no-repeat;
+}
+
+#screenshot .technoli-businesssupport-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-07.png) no-repeat;
+}
+
+#screenshot .technoli-city-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-08.png) no-repeat;
+}
+
+#screenshot .technoli-sold-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-09.png) no-repeat;
+}
+
+#screenshot .technoli-train-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-10.png) no-repeat;
+}
+
+#screenshot .technoli-walking-background-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-11.png) no-repeat;
+}
+
+#screenshot .technoli-text-overlay-bottom-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-12.png) no-repeat;
+}
+
+#screenshot .technoli-background-overlay-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-13.png) no-repeat;
+}
+
+#screenshot .rounded-corners-all-skinrpreview {
+  background: url(../images/skinrpreviews/technoli-styles-14.png) no-repeat;
+}
