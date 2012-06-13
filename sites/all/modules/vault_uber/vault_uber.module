@@ -1,0 +1,195 @@
+<?php
+
+function vault_uber_ca_action() {
+  
+  $order_arg = array(
+    '#entity' => 'uc_order',
+    '#title' => t('Order'),
+    );
+  
+  $actions['vault_uber_update_civi_profile'] = array(
+    '#title' => t('Update user\'s Civicrm record with info from order'),
+    '#category' => t('Order'),
+    '#callback' => 'vault_uber_action_update_civi_profile',
+    '#arguments' => array(
+      'order' => $order_arg,
+      ),
+    );
+  
+  return $actions;
+}
+
+
+// Update Civi profile from information in the order
+function vault_uber_action_update_civi_profile(&$order, $settings) {
+
+  // Only update the civi profile for new accounts
+  if (empty($order->data['new_user'])) { return; }
+  
+  // Civi must be present
+  if (!module_exists('civicrm')) { return; }
+  
+  if ( ! civicrm_initialize( ) ) {
+    return;
+  }
+  
+  global $civicrm_root;
+  require_once $civicrm_root . '/api/api.php';
+  
+  // Find contact id
+  $uf_params = array(
+    'uf_id' => $order->uid,
+    'version' => 3,
+    'sequential' => 1,
+    );
+  
+  $UFMatch = civicrm_api('UFMatch','Get',$uf_params);
+  
+  // Contact id found, update the profile
+  if (!$UFMatch['is_error'] && $UFMatch['count'] == '1') {
+    
+    // user found in Civi
+    $contact_id = $UFMatch['values'][0]['contact_id'];
+    
+    // Update civi with first and last name
+    $update_params = array(
+      'contact_id'   => $contact_id,
+      'version'      => 3,
+      'contact_type' => 'Individual',
+      'first_name'   => $order->billing_first_name,
+      'last_name'    => $order->billing_last_name,
+      ); 
+    
+    $update_result = civicrm_api('contact', 'create', $update_params); 
+    
+    // Add billing adress to contact record
+    $billing_address = array( 
+      'contact_id'             => $contact_id,
+      'location_type_id'       => 5,
+      'street_address'         => $order->billing_street1,
+      'supplemental_address_1' => $order->billing_street2,
+      'postal_code'            => $order->billing_postal_code,
+      'country_id'             => 1228, // USA
+      'city'                   => $order->billing_city,
+      'state_province_id'      => _vault_uber_translate_zone($order->billing_zone),
+      'is_primary'             => 1,
+      'version'                => 3,
+      );
+    
+    $billing_phone = array( 
+      'contact_id' => $contact_id,
+      'location_type_id' => 5,
+      'phone' => $order->billing_phone,
+      'is_primary' => 1,
+      'version' => 3,
+      );
+    
+    $billing_results = civicrm_api('Address', 'create', $billing_address);
+    $billing_phone_results = civicrm_api('phone','create',$billing_phone);
+    
+    // Add the delivery address
+    $delivery_address = array( 
+      'contact_id'             => $contact_id,
+      'location_type_id'       => 6,
+      'street_address'         => $order->delivery_street1,
+      'supplemental_address_1' => $order->delivery_street2,
+      'postal_code'            => $order->delivery_postal_code,
+      'country_id'             => 1228, // USA
+      'city'                   => $order->delivery_city,
+      'state_province_id'      => _vault_uber_translate_zone($order->delivery_zone),
+      'is_primary'             => 0,
+      'version'                => 3,
+      );
+    
+    $delivery_results = civicrm_api('Address', 'create', $delivery_address);
+    
+  }
+  
+  
+}
+
+function _vault_uber_translate_zone($ubercart_zone_id) {
+  
+  $civi_zone_ids = array(
+		"1000" => "Alabama",
+		"1001" => "Alaska",
+		"1052" => "American Samoa",
+		"1002" => "Arizona",
+		"1003" => "Arkansas",
+		"1060" => "Armed Forces Americas",
+		"1059" => "Armed Forces Europe",
+		"1061" => "Armed Forces Pacific",
+		"1004" => "California",
+		"1005" => "Colorado",
+		"1006" => "Connecticut",
+		"1007" => "Delaware",
+		"1050" => "District of Columbia",
+		"1008" => "Florida",
+		"1009" => "Georgia",
+		"1053" => "Guam",
+		"1010" => "Hawaii",
+		"1011" => "Idaho",
+		"1012" => "Illinois",
+		"1013" => "Indiana",
+		"1014" => "Iowa",
+		"1015" => "Kansas",
+		"1016" => "Kentucky",
+		"1017" => "Louisiana",
+		"1018" => "Maine",
+		"1019" => "Maryland",
+		"1020" => "Massachusetts",
+		"1021" => "Michigan",
+		"1022" => "Minnesota",
+		"1023" => "Mississippi",
+		"1024" => "Missouri",
+		"1025" => "Montana",
+		"1026" => "Nebraska",
+		"1027" => "Nevada",
+		"1028" => "New Hampshire",
+		"1029" => "New Jersey",
+		"1030" => "New Mexico",
+		"1031" => "New York",
+		"1032" => "North Carolina",
+		"1033" => "North Dakota",
+		"1055" => "Northern Mariana Islands",
+		"1034" => "Ohio",
+		"1035" => "Oklahoma",
+		"1036" => "Oregon",
+		"1037" => "Pennsylvania",
+		"1056" => "Puerto Rico",
+		"1038" => "Rhode Island",
+		"1039" => "South Carolina",
+		"1040" => "South Dakota",
+		"1041" => "Tennessee",
+		"1042" => "Texas",
+		"1058" => "United States Minor Outlying Islands",
+		"1043" => "Utah",
+		"1044" => "Vermont",
+		"1057" => "Virgin Islands",
+		"1045" => "Virginia",
+		"1046" => "Washington",
+		"1047" => "West Virginia",
+		"1048" => "Wisconsin",
+		"1049" => "Wyoming");
+	
+	// Find the name for this sone id
+	$sql = "SELECT zone_name FROM {uc_zones} WHERE zone_id=%d";
+	
+	$result = db_query($sql, $ubercart_zone_id);
+	
+	if ($result && db_affected_rows() == 1) {
+	  $item = db_fetch_array($result);
+	  $ubercart_zone_name = $item['zone_name'];
+	} else {
+	  return 0;
+	}
+	
+	// lookup the zone name in array of civi zone ids
+	if ($civi_zone_id = array_search($ubercart_zone_name, $civi_zone_ids)) {
+	  return $civi_zone_id;
+	} else {
+	  return 0;
+	}
+	
+}
+
