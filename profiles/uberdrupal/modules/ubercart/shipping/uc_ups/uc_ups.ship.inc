@@ -279,6 +279,14 @@ function uc_ups_fulfill_order_validate($form, &$form_state) {
   $response_obj = drupal_http_request(variable_get('uc_ups_connection_address', 'https://wwwcie.ups.com/ups.app/xml/') .'ShipConfirm', array(), 'POST', $request);
   $response = new SimpleXMLElement($response_obj->data);
   //drupal_set_message('<pre>'. htmlentities($response->asXML()) .'</pre>');
+
+  if (variable_get('uc_ups_cert_mode', FALSE) && user_access('configure quotes')) {
+    require_once('uc_ups.certification.inc');
+    $folder = 'oid-' . $form_state['values']['order_id'];
+    $file = 'ShipmentConfirm';
+    uc_ups_certification_capture_xml($request, $response_obj, $folder, $file);
+  }
+
   if (isset($response->Response->Error)) {
     $error = $response->Response->Error;
     $error_msg = (string)$error->ErrorSeverity .' Error '. (string)$error->ErrorCode .': '. (string)$error->ErrorDescription;
@@ -437,8 +445,17 @@ function uc_ups_shipment_request($packages, $origin, $destination, $ups_service)
     <RequestOption>validate</RequestOption>
   </Request>
   <Shipment>";
+  // If destination is Canada or Puerto Rico
+  if ($destination->country == 124 || $destination->country == 630) {
+    $schema .= "<InvoiceLineTotal>";
+    $schema .=   "<CurrencyCode>". variable_get('uc_currency_code', 'USD') ."</CurrencyCode>";
+    $schema .=   "<MonetaryValue>". number_format($package->value, 0, '.', '') ."</MonetaryValue>";
+    $schema .= "</InvoiceLineTotal>";
+  }
+  $schema .=   "<Description>". $store['name'] ." Online Order</Description>";
   $schema .=   "<Shipper>";
   $schema .=     "<Name>". $store['name'] ."</Name>";
+  $schema .=     "<AttentionName>". $origin->first_name .' '. $origin->last_name ."</AttentionName>";
   $schema .=     "<ShipperNumber>". variable_get('uc_ups_shipper_number', '') ."</ShipperNumber>";
   if ($store['phone']) {
     $schema .=   "<PhoneNumber>". $store['phone'] ."</PhoneNumber>";
@@ -605,6 +622,14 @@ function uc_ups_confirm_shipment_submit($form, &$form_state) {
   $packages = array_keys($_SESSION['ups']['packages']);
   $request = uc_ups_request_pickup($form_state['values']['digest'], $order_id, $packages);
   $result = drupal_http_request(variable_get('uc_ups_connection_address', 'https://wwwcie.ups.com/ups.app/xml/') .'ShipAccept', array(), 'POST', $request);
+
+  if (variable_get('uc_ups_cert_mode', FALSE) && user_access('configure quotes')) {
+    require_once('uc_ups.certification.inc');
+    $folder = 'oid-' . $order_id;
+    $name = 'ShipmentAccept';
+    uc_ups_certification_capture_xml($request, $result, $folder, $name);
+  }
+
   $response = new SimpleXMLElement($result->data);
   $code = (string)$response->Response->ResponseStatusCode;
   if ($code == 0) { // failed request
@@ -646,6 +671,7 @@ function uc_ups_confirm_shipment_submit($form, &$form_state) {
     $package =& current($shipment->packages);
     $package->tracking_number = (string)$package_results->TrackingNumber;
     $label_image = (string)$package_results->LabelImage->GraphicImage;
+
     if (file_check_directory(file_create_path('ups_labels'), FILE_CREATE_DIRECTORY)) {
       $label_path = file_create_path('ups_labels') .'/label'. $package->tracking_number .'.gif';
       if ($label_file = fopen($label_path, 'wb')) {
@@ -660,8 +686,19 @@ function uc_ups_confirm_shipment_submit($form, &$form_state) {
     else {
       drupal_set_message(t('Could not find or create the directory "ups_labels" in the file system path.'), 'error');
     }
+
+    if (variable_get('uc_ups_cert_mode', FALSE) && user_access('configure quotes')) {
+      $html_page = (string)$package_results->LabelImage->HTMLImage;
+      $folder = 'oid-' . $order_id;
+      uc_ups_certification_capture_label_image($html_page, $label_image, $folder, $package->tracking_number);
+    }
+
     unset($package);
     next($shipment->packages);
+  }
+
+  if (variable_get('uc_ups_cert_mode', FALSE) && user_access('configure quotes')) {
+    uc_ups_certification_capture_high_value($response->ShipmentResults->ControlLogReceipt, $folder);
   }
 
   uc_shipping_shipment_save($shipment);
