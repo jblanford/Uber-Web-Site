@@ -460,8 +460,12 @@ function uc_order_admin($sql = NULL, $args = NULL, $search = FALSE) {
         $where = 'WHERE o.order_status IN '. uc_order_status_list('general', TRUE);
       }
     }
-    $sql .= $where . tablesort_sql($header);
+    $sql .= $where;
   }
+
+  // Need to include tablesort_sql() when the SQL command is passed as an
+  // argument AND when we build the SQL command here in this function.
+  $sql .= tablesort_sql($header);
 
   $address = variable_get('uc_customer_list_address', 'billing');
   if ($address == 'shipping') {
@@ -761,7 +765,7 @@ function uc_order_usearch() {
     $sql = 'SELECT o.order_id, o.uid, o.billing_first_name, o.billing_last_name, o.order_total, '
           .'o.order_status, o.created, os.title FROM {uc_orders} o LEFT JOIN {uc_order_statuses} os '
           .'ON o.order_status = os.order_status_id WHERE o.order_status NOT IN '. uc_order_status_list('specific', TRUE)
-         . $where .' ORDER BY o.created DESC';
+         . $where;
 
     $output .= uc_order_admin($sql, $args, TRUE);
   }
@@ -1199,7 +1203,7 @@ function theme_uc_order_edit_form($form) {
           $output .= $contents;
         }
         else {
-          $output .= '<div class="order-pane '. $pane['class'] .'">';
+          $output .= '<div class="order-pane '. $pane['class'] .'" id="order-pane-' . $pane['id'] . '">';
           if ($func('show-title', NULL) !== FALSE) {
             $output .= '<div class="order-pane-title">'. $pane['title'] .': '
                      . $func('edit-title', $form) .'</div>';
@@ -1247,6 +1251,8 @@ function uc_order_edit_form_submit($form, &$form_state) {
   $order = uc_order_load($form_state['values']['order_id']);
   $log = array();
 
+  uc_order_module_invoke('edit-products', $order, $_POST);
+
   $panes = _order_pane_list();
   foreach ($panes as $pane) {
     if (in_array('edit', $pane['show']) &&
@@ -1270,13 +1276,6 @@ function uc_order_edit_form_submit($form, &$form_state) {
     }
   }
 
-  if (module_exists('uc_stock')) {
-    $qtys = array();
-    foreach ($order->products as $product) {
-      $qtys[$product->order_product_id] = $product->qty;
-    }
-  }
-
   unset($order->products);
   if (isset($_POST['products']) && is_array($_POST['products'])) {
     foreach ($_POST['products'] as $product) {
@@ -1284,13 +1283,6 @@ function uc_order_edit_form_submit($form, &$form_state) {
         $product['data'] = unserialize($product['data']);
         $product = (object)$product;
         $order->products[] = $product;
-
-        if (module_exists('uc_stock')) {
-          $temp = $product->qty;
-          $product->qty = $product->qty - $qtys[$product->order_product_id];
-          uc_stock_adjust_product_stock($product, 0, $order);
-          $product->qty = $temp;
-        }
       }
       else {
         $log['remove_'. $product['nid']] = $product['title'] .' removed from order.';
@@ -1326,6 +1318,8 @@ function uc_order_edit_form_submit($form, &$form_state) {
  * Populates the product add/edit div on the order edit screen.
  */
 function uc_order_edit_products($order) {
+  uc_order_module_invoke('edit-products', $order, $_POST);
+
   if (is_array($_POST['products'])) {
     foreach ($_POST['products'] as $key => $product) {
       $product['data'] = unserialize($product['data']);
@@ -1376,19 +1370,9 @@ function uc_order_edit_products($order) {
       if (variable_get('uc_order_logging', TRUE)) {
         uc_order_log_changes($order->order_id, array('add' => t('Added (@qty) @product-title to order.', array('@qty' => $product->qty, '@product-title' => $product->title))));
       }
-
-      // Decrement stock?
-      if (module_exists('uc_stock')) {
-        uc_stock_adjust_product_stock($product, 0, $order);
-      }
       break;
     case 'remove':
       $order_product_id = intval($_POST['opid']);
-      // Put back the stock?
-      if (module_exists('uc_stock')) {
-        $product = db_fetch_object(db_query("SELECT model, qty FROM {uc_order_products} WHERE order_product_id = %d", $order_product_id));
-        uc_stock_adjust($product->model, $product->qty);
-      }
       db_query("DELETE FROM {uc_order_products} WHERE order_product_id = %d", $order_product_id);
       break;
   }
@@ -1759,7 +1743,7 @@ function uc_order_mail_invoice_form($form_state, $order) {
  * @see uc_order_mail_invoice_form()
  */
 function uc_order_mail_invoice_form_validate($form, &$form_state) {
-  $recipient = check_plain($form_state['values']['email']);
+  $recipient = $form_state['values']['email'];
   if (empty($recipient) || !valid_email_address($recipient)) {
     form_set_error('email', t('Invalid e-mail address.'));
   }
@@ -1778,7 +1762,7 @@ function uc_order_mail_invoice_form_submit($form, &$form_state) {
     drupal_goto('admin/store/orders');
   }
 
-  $recipient = check_plain($form_state['values']['email']);
+  $recipient = $form_state['values']['email'];
 
   $params = array('order' => $order);
   $sent = drupal_mail('uc_order', 'invoice', $recipient, uc_store_mail_recipient_language($recipient), $params, uc_store_email_from());

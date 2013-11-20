@@ -155,7 +155,7 @@ function uc_cart_cart_settings_form() {
     '#type' => 'fieldset',
     '#title' => t('Continue shopping element'),
     '#description' => t('Ubercart will add a continue shopping to the cart page based on the settings below.'),
-    '#summary' => t('Continue shopping !type is: <br />!link', array('!type' => variable_get('uc_continue_shopping_type', 'link') == 'link' ? t('link') : t('button'), '!link' => l(variable_get('uc_continue_shopping_text', t('Continue shopping')), variable_get('uc_cart_continue_shopping', '')))),
+    '#summary' => t('Continue shopping !type is: <br />!link', array('!type' => variable_get('uc_continue_shopping_type', 'link') == 'link' ? t('link') : t('button'), '!link' => l(variable_get('uc_continue_shopping_text', '') ? variable_get('uc_continue_shopping_text', '') : t('Continue shopping'), variable_get('uc_continue_shopping_url', '')))),
   );
   $form['continue_shopping']['uc_continue_shopping_type'] = array(
     '#type' => 'radios',
@@ -240,12 +240,12 @@ function uc_cart_cart_panes_form() {
     $form['panes'][$pane['id']]['uc_cap_'. $pane['id'] .'_enabled'] = array(
       '#type' => 'checkbox',
       '#title' => $pane['title'],
-      '#default_value' => $pane['enabled'],
+      '#default_value' => variable_get('uc_cap_'. $pane['id'] .'_enabled', $pane['enabled']),
     );
     $form['panes'][$pane['id']]['uc_cap_'. $pane['id'] .'_weight'] = array(
       '#type' => 'weight',
       '#delta' => 10,
-      '#default_value' => $pane['weight'],
+      '#default_value' => variable_get('uc_cap_'. $pane['id'] .'_weight', $pane['weight']),
       '#attributes' => array('class' => 'uc-cart-pane-weight'),
     );
   }

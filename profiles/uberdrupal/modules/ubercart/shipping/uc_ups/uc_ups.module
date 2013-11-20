@@ -818,14 +818,6 @@ function uc_ups_void_shipment($shipment_number, $tracking_numbers = array()) {
       $success = (string)$response->Status->StatusType->Code;
     }
   }
-
-  if (variable_get('uc_ups_cert_mode', FALSE) && user_access('configure quotes')) {
-    require_once('uc_ups.certification.inc');
-    $folder = 'void-sid-' . $shipment_number;
-    $name = 'VoidShipment';
-    uc_ups_certification_capture_xml($request, $resp, $folder, $name);
-  }
-
   return (bool)$success;
 }
 

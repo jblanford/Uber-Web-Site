@@ -221,13 +221,6 @@ function uc_ups_admin_settings() {
     '#description'   => t('Controls how long labels are stored on the server before being automatically deleted. Cron must be enabled for automatic deletion. Default is never delete the labels, keep them forever.'),
   );
 
-  $form['uc_ups_cert_mode'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Certification mode'),
-    '#default_value' => variable_get('uc_ups_cert_mode', FALSE),
-    '#description' => t('When enabled, the UPS module will produce the necessary files for certification by UPS. Not for production use!.'),
-  );
-
   $form['#validate'][] = 'uc_ups_admin_settings_validate';
 
   return system_settings_form($form);

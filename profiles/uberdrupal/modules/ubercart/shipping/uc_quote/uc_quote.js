@@ -27,7 +27,7 @@ function setQuoteCallbacks(products, context) {
   $("select[name*=delivery_address_select]:not(.getQuotes-processed)", context).addClass('getQuotes-processed').change(function() {
     $("input[name*=delivery_postal_code]").trigger('change');
   });
-  $("input[name*=copy_address]:not(.getQuotes-processed)", context).addClass('getQuotes-processed').click(function() {
+  $("input[id*=delivery-copy-address]:not(.getQuotes-processed)", context).addClass('getQuotes-processed').click(function() {
     if (copy_box_checked == true) {
       $("input[name*=billing_postal_code]:not(.getQuotes-processed)", context).addClass('getQuotes-processed').bind('change', triggerQuoteCallback);
       $("select[name*=billing_address_select]:not(.getQuotes-processed)", context).addClass('getQuotes-processed').bind('change', triggerQuoteCallback);
@@ -88,6 +88,10 @@ function quoteCallback(products) {
   $("input[name*=billing_]").each(function(i) {
     details["details[billing][" + $(this).attr("name").split("billing_")[1].replace(/]/, "") + "]"] = $(this).val();
   });
+  var paymentMethod = $('input[name*=payment_method]:checked').val();
+  if (paymentMethod !== undefined) {
+    details["payment_method"] = paymentMethod;
+  }
 
   if (!!products) {
     details["products"] = products;
@@ -166,7 +170,7 @@ function displayQuote(data) {
       if (data[i].notes) {
         item += '<div class="quote-notes">' + data[i].notes + "</div>";
       }
-      if (data[i].rate == undefined && item.length) {
+      if (data[i].rate == undefined && item.length && label) {
         item = label + ': ' + item;
       }
       quoteDiv.append('<div class="form-item">' + item + "</div>\n");

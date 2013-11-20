@@ -360,7 +360,7 @@ function uc_usps_quote($products, $details, $method) {
   $connection_url = 'http://production.shippingapis.com/ShippingAPI.dll';
 
   // Initialize $services to prevent PHP notices here and in uc_quote.
-  $services['data'] = array('debug' => NULL, 'error' => array());
+  $services['data'] = array('debug' => NULL, 'error' => '');
   $addresses = array((array)variable_get('uc_quote_store_default_address', new stdClass()));
   $packages = _uc_usps_package_products($products, $addresses);
   if (!count($packages)) {
@@ -518,14 +518,13 @@ function theme_uc_usps_option_label($service, $packages) {
   // Start with USPS logo
   $output  = theme('image',
     drupal_get_path('module', 'uc_usps') . '/uc_usps_logo.gif',
-    t('USPS logo'),
+    t('U.S.P.S.'),
     '',
     array('class' => 'usps-logo')
   );
 
-  // Add USPS service name, removing the first nine characters
-  // (== 'U.S.P.S. ') because these replicate the logo image
-  $output .= substr($service, 9);
+  // Add USPS service name, removing any 'U.S.P.S.' prefix.
+  $output .= preg_replace('/^U\.S\.P\.S\./', '', $service);
 
   // Add package information
   $output .= ' ('. format_plural(count($packages), '1 package', '@count packages') .')';
@@ -564,6 +563,10 @@ function uc_usps_rate_request($packages, $origin, $destination) {
         '<Ounces>'. number_format($package->ounces, 1, '.', '') .'</Ounces>'.
         '<Container>'. $package->container .'</Container>'.
         '<Size>'. $package->size .'</Size>'.
+        '<Width>'. $package->width .'</Width>'.
+        '<Length>'. $package->length .'</Length>'.
+        '<Height>'. $package->height .'</Height>'.
+        '<Girth>'. $package->girth .'</Girth>'.
         '<Machinable>'. ($package->machinable ? 'True' : 'False') .'</Machinable>'.
         '</Package>';
 
@@ -751,19 +754,7 @@ function _uc_usps_package_products($products, &$addresses) {
           list($package->length, $package->height) = array($package->height, $package->length);
         }
         $package->girth = 2 * $package->width + 2 * $package->height;
-        $package->size = $package->length + $package->girth;
-        if ($package->size <= 84) {
-          $package->size = 'REGULAR';
-        }
-        elseif ($package->size <= 108) {
-          $package->size = 'LARGE';
-        }
-        elseif ($package->size <= 130) {
-          $package->size = 'OVERSIZE';
-        }
-        else {
-          $package->size = 'GI-HUGE-IC'; // Too big for the U.S. Postal service.
-        }
+        $package->size = $package->length <= 12 ? 'REGULAR' : 'LARGE';
         $package->machinable = (
           $package->length >= 6 && $package->length <= 34 &&
           $package->width >= 0.25 && $package->width <= 17 &&
@@ -806,19 +797,7 @@ function _uc_usps_package_products($products, &$addresses) {
           list($package->length, $package->height) = array($package->height, $package->length);
         }
         $package->girth = 2 * $package->width + 2 * $package->height;
-        $package->size = $package->length + $package->girth;
-        if ($package->size <= 84) {
-          $package->size = 'REGULAR';
-        }
-        elseif ($package->size <= 108) {
-          $package->size = 'LARGE';
-        }
-        elseif ($package->size <= 130) {
-          $package->size = 'OVERSIZE';
-        }
-        else {
-          $package->size = 'GI-HUGE-IC'; // Too big for the U.S. Postal service.
-        }
+        $package->size = $package->length <= 12 ? 'REGULAR' : 'LARGE';
         $package->machinable = (
           $package->length >= 6 && $package->length <= 34 &&
           $package->width >= 0.25 && $package->width <= 17 &&

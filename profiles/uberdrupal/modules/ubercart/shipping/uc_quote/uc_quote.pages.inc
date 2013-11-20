@@ -43,6 +43,9 @@ function uc_quote_request_quotes() {
   }
   $fake_order = new stdClass();
   $fake_order->uid = $_POST['uid'];
+  if (isset($_POST['payment_method'])) {
+    $fake_order->payment_method = $_POST['payment_method'];
+  }
   $fake_order->products = $products;
   foreach ((array) $_POST['details'] as $type => $address) {
     foreach ($address as $key => $value) {
@@ -141,7 +144,7 @@ function _uc_quote_assemble_quotes($order) {
       $data = uc_quote_action_get_quote($order, $method);
 
       foreach ($data as &$quote) {
-        if (isset($quote['rate'])) {
+        if (isset($quote['rate']) && !isset($quote['format'])) {
           $context['subject']['line_item'] = array(
             'type' => 'shipping',
             'name' => $quote['option_label'],

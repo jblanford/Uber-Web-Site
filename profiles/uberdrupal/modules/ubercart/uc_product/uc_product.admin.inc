@@ -23,7 +23,8 @@ function uc_product_administration() {
 
   $nids = array();
   // Display 50 products per page.
-  $result = pager_query("SELECT n.nid FROM {node} AS n INNER JOIN {uc_products} AS p ON n.vid = p.vid ORDER BY ". $order, 50, 0, NULL);
+  $types = "('" . implode("', '", uc_product_types()) . "')";
+  $result = pager_query("SELECT n.nid, n.type FROM {node} AS n INNER JOIN {uc_products} AS p ON n.vid = p.vid WHERE n.type IN $types ORDER BY ". $order, 50, 0, NULL);
   while ($product = db_fetch_object($result)) {
     $nids[] = $product->nid;
   }
@@ -560,7 +561,7 @@ function uc_product_class_form($form_state, $class = NULL) {
       '#type' => 'textfield',
       '#title' => t('Class ID'),
       '#required' => TRUE,
-      '#max_length' => 32,
+      '#maxlength' => 32,
       '#description' => t('The machine-readable name of this content type. This text will be used for constructing the URL of the <em>create content</em> page for this content type. This name may consist only of lowercase letters, numbers, and underscores. Dashes are not allowed. Underscores will be converted into dashes when constructing the URL of the <em>create content</em> page. This name must be unique to this content type.'),
     );
   }

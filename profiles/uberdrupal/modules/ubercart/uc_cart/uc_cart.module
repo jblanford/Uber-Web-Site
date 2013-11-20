@@ -966,6 +966,7 @@ function uc_cart_view_form($form_state, $items = NULL) {
     '#type' => 'submit',
     '#name' => 'update-cart',
     '#value' => t('Update cart'),
+    '#submit' => array('uc_cart_view_form_submit', 'uc_cart_view_form_update_message'),
   );
   if (variable_get('uc_checkout_enabled', TRUE)) {
     $form['checkout'] = array(
@@ -998,10 +999,15 @@ function uc_cart_view_form_submit($form, &$form_state) {
 
   // Update the items in the shopping cart based on the form values.
   uc_cart_update_item_object((object)$form_state['values']);
+}
 
-  if ($form_state['clicked_button']['#name'] == 'update-cart') {
-    drupal_set_message(t('Your cart has been updated.'));
-  }
+/**
+ * Displays "cart updated" message for uc_cart_view_form().
+ *
+ * @see uc_cart_view_form()
+ */
+function uc_cart_view_form_update_message($form, &$form_state) {
+  drupal_set_message(t('Your cart has been updated.'));
 }
 
 /**
@@ -1294,7 +1300,8 @@ function uc_cart_complete_sale_account($order) {
 
   // Send the customer their account details if enabled.
   if (variable_get('uc_new_customer_email', TRUE)) {
-    drupal_mail('user', 'register_no_approval_required', $order->primary_email, uc_store_mail_recipient_language($order->primary_email), array('account' => $account), uc_store_email_from());
+    $type = variable_get('uc_new_customer_status_active', TRUE) ? 'register_no_approval_required' : 'register_pending_approval';
+    drupal_mail('user', $type, $order->primary_email, uc_store_mail_recipient_language($order->primary_email), array('account' => $account), uc_store_email_from());
   }
 
   $order->uid = $account->uid;
@@ -1663,9 +1670,6 @@ function uc_cart_cart_pane_list($items, $action = NULL) {
 
   $panes = module_invoke_all('cart_pane', $items);
 
-  // Allow other modules to alter the panes.
-  drupal_alter('cart_pane', $panes, $items);
-
   if (!is_array($panes) || count($panes) == 0) {
     return array();
   }
@@ -1673,6 +1677,10 @@ function uc_cart_cart_pane_list($items, $action = NULL) {
     $panes[$i]['enabled'] = variable_get('uc_cap_'. $panes[$i]['id'] .'_enabled', (!isset($panes[$i]['enabled']) ? TRUE : $panes[$i]['enabled']));
     $panes[$i]['weight'] = variable_get('uc_cap_'. $panes[$i]['id'] .'_weight', (!isset($panes[$i]['weight']) ? 0 : $panes[$i]['weight']));
   }
+
+  // Allow other modules to alter the panes.
+  drupal_alter('cart_pane', $panes, $items);
+
   usort($panes, 'uc_weight_sort');
 
   return $panes;
