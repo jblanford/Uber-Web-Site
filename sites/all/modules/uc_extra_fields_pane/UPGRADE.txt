@@ -1,0 +1,147 @@
+Instructions for upgrading from 6.x-1.0 or 6.x-2.0-alpha1
+------------------------
+This document contains useful instructions for developers who
+are upgrading from Extra Fields Pane 6.x-1.0 or 6.x-2.0-alpha1
+and have Extra Fields Pane integration code in their modules
+or themes.
+
+
+UPGRADING FROM 6.x-1.0
+------------
+When upgrading from 6.x-1.0, be sure to run database updates.
+In Extra Fields Pane 6.x-2.x, database columns are no longer
+added/removed when adding or deleting Extra Fields Pane fields.
+Instead, the table "uc_extra_fields_values" is normalized and
+will always contain four columns.
+
+Table "uc_extra_fields_values"
+------------
+- element_id
+  This will be an ID referring to either the order ID from the
+  uc_orders table or an address ID referring to the uc_addresses
+  table (if you have the uc_addresses module installed).
+  This depends on the value of "element_type".
+- element_type
+  This tells what type of information is stored in the "value"
+  column. It also tells what kind of ID "element_id" is
+  referring. There are four possible values:
+  - UCXF_VALUE_ORDER_INFO (11)
+    The saved value belongs to the extra information pane. The ID
+    in "element_id" is referring to the order ID (order_id) from the
+    uc_orders table.
+  - UCXF_VALUE_ORDER_DELIVERY (12)
+    The saved value belongs to the delivery pane. The ID in
+    "element_id" is referring to the order ID (order_id) from the
+    uc_orders table.
+  - UCXF_VALUE_ORDER_BILLING (13)
+    The saved value belongs to the billing pane. The ID in
+    "element_id" is referring to the order ID (order_id) from the
+    uc_orders table.
+  - UCXF_VALUE_ADDRESS (21)
+    The saved value belongs to an address (from Ubercart Addresses)
+    The ID in "element_id" is referring to the address ID (aid)
+    from the uc_addresses table.
+- field_id
+  - ID of the field used in the uc_extra_fields table.
+- value
+  - The value that the customer entered on checkout or the value
+    that an administrator entered when editing the order.
+
+
+UPGRADING FROM 6.x-2.0-alpha1
+------------
+The API has been redesigned with the release of 6.x-2.0-beta1.
+This was all done to ease the integration with Ubercart Addresses
+6.x-2.x.
+This means certain functions have been deprecated and they will be
+removed after the release of 6.x-2.0-beta2. Some information is
+stored in a different place and there are new classes.
+There were no changes in the database schema. Also, the Extra Fields
+Pane tokens remained the same.
+
+Summary
+------------
+- $order->extra_fields array removed; contents moved to the order
+  object
+- Deprecated functions
+- New classes
+- New permission: "use php fields"
+
+$order->extra_fields array removed; contents moved to the order
+object
+------------
+Previously, values from Extra Fields Pane were available in the
+"extra_fields" array from the order object. The "extra_fields"
+array has been removed. Instead, Extra Fields Pane values are
+tight directly to the order. Also, the field names were renamed.
+Names of extra fields are now prefixed with the pane type they
+appear in with the word "extra" omitted.
+Delivery fields are prefixed with "delivery_", billing fields
+are prefixed with "billing_" and custom order fields are prefixed
+with "information_".
+
+Examples:
+$order->delivery_ucxf_title
+$order->billing_ucxf_house_number
+$order->information_ucxf_vat_number
+Instead of (used in 6.x-2.0-alpha1):
+$order->extra_fields['ucxf_title_delivery']
+$order->extra_fields['ucxf_house_number_billing']
+$order->extra_fields['ucxf_vat_number']
+
+This change was needed for in order to integrate with Ubercart
+Addresses 6.x-2.x smoothly.
+
+Deprecated functions
+------------
+- uc_extra_fields_pane_load_pane_type()
+  Replaced by the classes UCXF_Pane and UCXF_AddressPane.
+- uc_extra_fields_pane_uc_checkout_pane_address()
+  Replaced by the class UCXF_AddressPane.
+- uc_extra_fields_pane_order_handler()
+  Replaced by the classes UCXF_Pane and UCXF_AddressPane.
+- uc_extra_fields_pane_create_field()
+  Replaced by UCXF_FieldList::createField().
+- uc_extra_fields_pane_load_fields_from_db()
+  Replaced by:
+  - UCXF_FieldList::getAllCustomFields()
+    for fields in the extra information pane.
+  - UCXF_FieldList::getAllAddressFields()
+    for fields in delivery/billing panes.
+  - UCXF_FieldList::getFieldsFromPane()
+    for fields from one particular pane.
+
+New classes
+------------
+All class files have been moved from the directory "includes"
+to the directory "class". Aside of that, there were some new
+classes introduced:
+- UCXF_Pane
+  Used to generate checkout and order panes for custom order
+  fields.
+- UCXF_AddressPane (extends UCXF_Pane)
+  Used to generate checkout and order panes for address fields.
+- UCXF_FieldList
+  This class is used to keep track of all loaded fields in one
+  request. It keeps a list of UCXF_Field instances (or instances
+  from a class that extend UCXF_Field). Use this class to create,
+  load or delete fields. For saving fields, use the UCXF_Field
+  class.
+- UCXF_Value
+  This class is used to keep track of all field values (entered
+  by customers) currently loaded. Use this class to load, save
+  and delete values or use the following functions for it
+  (already available in 6.x-2.0-alpha1):
+  - uc_extra_fields_pane_value_load()
+  - uc_extra_fields_pane_value_list_load()
+  - uc_extra_fields_pane_value_save()
+  - uc_extra_fields_pane_value_delete()
+An autoload function was introduced for automatically loading of
+classes of Extra Fields Pane.
+
+New permission: "use php fields"
+------------
+The permission "use php fields" was added to have control about
+which users may create and edit fields with PHP-code. Fields of
+type "PHP string" or "PHP select list" can only be added or edited
+by users who have that permission.
