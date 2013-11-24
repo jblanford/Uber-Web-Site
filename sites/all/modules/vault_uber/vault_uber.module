@@ -108,6 +108,42 @@ function vault_uber_action_update_civi_profile(&$order, $settings) {
   
 }
 
+// Add validation to uc_cart_checkout_form
+function vault_uber_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'uc_cart_checkout_form') {
+    array_unshift($form['#validate'], 'vault_uber_validate_priority_code'); 
+ }
+}
+
+// validate priority code on uc_cart_checkout_form
+function vault_uber_validate_priority_code($form, &$form_state) {
+  
+  // if no priority code entered, return
+  if ( empty($form_state['values']['panes']['delivery']['delivery_ucxf_priority_code']) ) {
+    return;
+  } 
+  
+  // Look for the submitted code
+  $query = "SELECT * from {improv_preg_code} WHERE preg_code = '%s'";
+  $code_lookup = db_query($query, $form_state['values']['panes']['delivery']['delivery_ucxf_priority_code']);
+  
+  if ($code = db_fetch_array($code_lookup)) {
+    
+    //preg code found, check that it has not been used
+    if ($code['used'] > 0) {
+      form_error($form['panes']['delivery']['delivery_ucxf_priority_code'], t('The Priority Customer Code has already been used.'));
+      return;
+    }
+    
+  } else {
+    //code not found
+    form_error($form['panes']['delivery']['delivery_ucxf_priority_code'], t('The Priority Customer Code is not valid.'));
+    return;
+  }
+  
+}
+
+
 function _vault_uber_translate_zone($ubercart_zone_id) {
   
   $civi_zone_ids = array(
