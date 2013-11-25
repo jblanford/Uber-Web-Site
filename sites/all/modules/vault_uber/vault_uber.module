@@ -16,7 +16,26 @@ function vault_uber_ca_action() {
       ),
     );
   
+  $actions['vault_uber_update_priority_code'] = array(
+    '#title' => t('Update Improv priority code as used'),
+    '#category' => t('Order'),
+    '#callback' => 'vault_uber_action_update_priority_code',
+    '#arguments' => array(
+      'order' => $order_arg,
+      ),
+    );
+  
   return $actions;
+}
+
+// Update Improv priority code as used
+function vault_uber_action_update_priority_code(&$order, $settings) {
+  
+  if (! empty($order->delivery_ucxf_priority_code) ) {
+    db_query("UPDATE {improv_preg_code} set used = 1, order_id = '%s' WHERE preg_code = '%s'", $order->order_id, $order->delivery_ucxf_priority_code);
+  }
+  
+  return true;
 }
 
 
