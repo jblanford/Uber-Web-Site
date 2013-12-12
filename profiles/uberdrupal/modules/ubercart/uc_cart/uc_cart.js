@@ -86,6 +86,7 @@ function uc_cart_copy_address(checked, source, target) {
         $('#edit-panes-' + target + '-' + target + this.id.substring(x)).val($(this).val());
         if (target == 'billing') {
           $(this).change(function () { update_billing_field(this); });
+          $(this).trigger('change');
         }
         else {
           $(this).change(function () { update_delivery_field(this); });
