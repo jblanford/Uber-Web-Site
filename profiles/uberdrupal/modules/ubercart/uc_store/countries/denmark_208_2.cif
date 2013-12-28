@@ -11,11 +11,11 @@ function denmark_install() {
 
   // Make the entries in the zones table.
   $zones = array(
-    array(208, 'DK-84', 'Hovedstaden'),
-    array(208, 'DK-82', 'Midtjylland'),
-    array(208, 'DK-81', 'Nordjylland'),
-    array(208, 'DK-85', 'Sjælland'),
-    array(208, 'DK-83', 'Syddanmark'),
+    array(208, 'DK', 'Danmark'),
+    array(208, 'DK', 'Danmark'),
+    array(208, 'DK', 'Danmark'),
+    array(208, 'DK', 'Danmark'),
+    array(208, 'DK', 'Danmark'),
   );
 
   foreach ($zones as $zone) {
