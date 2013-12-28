@@ -19,6 +19,9 @@
                   <?php echo $site_logo; ?>
                 </td>
                 <td width="98%">
+                  <div style="padding-left: 1em;">
+                  <span style="font-size: large;"><?php echo $store_name; ?></span><br />
+                  <?php echo $site_slogan; ?>
                   </div>
                 </td>
                 <td nowrap="nowrap">
@@ -101,14 +104,6 @@
                 </td>
                 <td width="98%">
                   <?php if (isset($order_payment_method)) { echo $order_payment_method; } ?>
-                </td>
-              </tr>
-		<tr>
-                <td nowrap="nowrap">
-                  <b><?php echo t('Customer VAT number:'); ?></b>
-                </td>
-                <td width="98%">
-		   <?php echo $order_vat_number; ?>
                 </td>
               </tr>
 

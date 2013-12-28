@@ -10,11 +10,9 @@
 <?php echo t('Order number:'); ?> <?php echo $order_admin_link; ?><br />
 <?php echo t('Customer:'); ?> <?php echo $order_first_name; ?> <?php echo $order_last_name; ?> - <?php echo $order_email; ?><br />
 <?php echo t('Order total:'); ?> <?php echo $order_total; ?><br />
-<?php echo t('Shipping method:'); ?> <?php echo $order_shipping_method; ?>
-</p>
+<?php echo t('Shipping method:'); ?> <?php echo $order_shipping_method; ?><br />
+<?php echo t('Customer VAT number:'); ?> <?php echo $order_vat_number;  ?>
 
-<p>
-<?php echo t('Products:'); ?><br />
 <?php
 $context = array(
   'revision' => 'themed',
